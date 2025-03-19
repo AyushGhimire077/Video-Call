@@ -46,6 +46,9 @@ const AuthContextProvider = ({ children }) => {
             
             if (data.success) {
                 toast.success(data.message || "Login successful");
+                setTimeout(() => {
+                    window.location.reload();
+                },2500);
             } else {
                 toast.error(data.message || "Login failed");
             }
