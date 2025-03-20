@@ -16,7 +16,7 @@ const FetchUser = () => {
 
   useEffect(() => {
     socket.emit("registerUser", caller);
-  }, [loggedUserId]);
+  }, [caller, loggedUserId, socket]);
 
   const [_, setClickedUser] = useState(null);
   const [activeUserId, setActiveUserId] = useState(null);
