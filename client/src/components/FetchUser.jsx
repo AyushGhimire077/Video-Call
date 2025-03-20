@@ -1,10 +1,22 @@
 // FetchUser.jsx
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../providers/MainContext";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthContex";
+import { SocketContext } from "../providers/SocketContext";
 
 const FetchUser = () => {
   const { filteredUsers, search, setSearch } = useContext(MainContext);
+
+  const { loggedUserId } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
+
+
+  const caller = loggedUserId;
+
+  useEffect(() => {
+    socket.emit("registerUser", caller);
+  }, [loggedUserId]);
 
   const [_, setClickedUser] = useState(null);
   const [activeUserId, setActiveUserId] = useState(null);

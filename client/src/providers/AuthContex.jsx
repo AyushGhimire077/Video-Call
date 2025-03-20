@@ -24,6 +24,9 @@ const AuthContextProvider = ({ children }) => {
             
             if (data.success) {
                 toast.success(data.message || "Registration successful");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2500);
             } else {
                 toast.error(data.message || "Registration failed");
             }

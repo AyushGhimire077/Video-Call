@@ -24,10 +24,6 @@ const CallBox = () => {
   useEffect(() => {
 
     if (!socket) return console.log("Socket not initialized");
-    //handle user regsiter
-    socket.emit("registerUser", caller);
-
-
   
     //handle incomming call
     socket.on("incoming-call", handleIncomingCall);
@@ -40,7 +36,7 @@ const CallBox = () => {
       socket.off("call-accepted", handleAcceptCall);
     };
     
-  }, [caller, socket]);
+  }, [caller, handleAcceptCall, socket]);
 
 
 
