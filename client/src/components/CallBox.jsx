@@ -23,15 +23,7 @@ const CallBox = () => {
   const receiver = clickedUser?._id;
 
   //handle accept call
-  const handleAcceptCall = () => {
-    if (incomingCallData && incomingCallData.roomId) {
-      const roomId = incomingCallData.roomId;
-      socket.emit("accept-call", { receiver: loggedUserId, roomId });
 
-      stopRingtone(); // Stop ringtone on accept
-      navigate(`/room/${roomId}`);
-    }
-  };
 
   //handle reject call
   const handleRejectCall = () => {
@@ -64,8 +56,14 @@ const CallBox = () => {
     if (caller && roomId) {
       setIsIncoming(true);
       setIncominCallData({ caller, roomId });
+       const ringtone = ringtoneRef.current;
+
+      ringtone.loop = true;
+      ringtone.play().catch((err) => console.log("Ringtone play error:", err));
     }
+
   };
+
 
   // Play/stop ringtone on incoming call
   useEffect(() => {
@@ -84,6 +82,17 @@ const CallBox = () => {
     ringtone.pause();
     ringtone.currentTime = 0;
   };
+
+      const handleAcceptCall = () => {
+      if (incomingCallData && incomingCallData.roomId) {
+        const roomId = incomingCallData.roomId;
+        socket.emit("accept-call", { receiver: loggedUserId, roomId });
+
+        stopRingtone(); // Stop ringtone on accept
+        navigate(`/room/${roomId}`);
+      }
+    };
+
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
